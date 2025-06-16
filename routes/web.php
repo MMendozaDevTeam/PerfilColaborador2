@@ -33,3 +33,5 @@ Route::post('/test-mentalidad', function (\Illuminate\Http\Request $request) {
     // Aquí podrías guardar en base o hacer análisis
     return back()->with('success', 'Test enviado correctamente.');
 })->name('test-mentalidad.guardar');
+
+Route::post('/perfil-psicometrico', [PerfilPsicometricoController::class, 'store'])->name('perfil.psicometrico.store');
