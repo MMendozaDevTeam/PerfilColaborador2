@@ -15,6 +15,14 @@ Route::get('/encuesta-mentalidad-empresarial', function () {
     return view('encuesta-mentalidad-empresarial');
 });
 
+Route::get('/perfil-colaborador', function () {
+    return view('perfil-colaborador');
+});
+
+Route::get('/resumen-admin', function () {
+    return view('resumen-admin');
+});
+
 Route::post('/perfil-comunicacion', function (\Illuminate\Http\Request $request) {
     // Aquí podrías guardar en base de datos, por ahora solo lo mostramos
     return back()->with('success', 'Respuestas guardadas correctamente.');

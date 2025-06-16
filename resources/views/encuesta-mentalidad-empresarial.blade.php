@@ -7,9 +7,14 @@
 
 <p class="text-center text-muted mb-4">
     Selecciona el punto de la escala que represente con cuál afirmación te identificas más. 
-    La escala va de estar totalmente de acuerdo con la afirmación de la izquierda hasta estar totalmente de acuerdo con la afirmación de la derecha.
 </p>
-
+<h2 class="mb-4 text-center">Encuesta de Perfil de Comunicación</h2>
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+@endif
 <form method="POST" action="{{ route('test-mentalidad.guardar') }}">
     @csrf
 
@@ -46,9 +51,9 @@
         <table class="table table-bordered align-middle text-center">
             <thead class="table-light">
                 <tr>
-                    <th style="width: 30%">Mentalidad de crecimiento</th>
+                    <th style="width: 30%">Me describe mejor</th>
                     <th colspan="5">Escala de identificación</th>
-                    <th style="width: 30%">Mentalidad fija</th>
+                    <th style="width: 30%">Me describe mejor</th>
                 </tr>
                 <tr class="text-muted small">
                     <td></td>
