@@ -6,13 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class PerfilPsicometrico extends Model
 {
+    protected $table = 'perfiles_psicometricos';
+
     protected $fillable = [
-        'user_id',
-        'nombre',
         'edad',
         'sexo',
         'nivel_educativo',
         'antiguedad_anios',
+        'es_nuevo',
         'area',
         'estado_civil',
         'respuesta_mentalidad',
