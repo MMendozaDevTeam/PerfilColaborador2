@@ -12,13 +12,31 @@ Route::get('/', function () {
 });
 
 
-Route::get('/encuesta-perfil-comunicacion', function () {
-    return view('encuesta-perfil-comunicacion');
-});
+Route::get('/encuesta-perfil-comunicacion', function (Request $request) {
+    $userId = $request->query('user_id');
 
-Route::get('/encuesta-mentalidad-empresarial', function () {
-    return view('encuesta-mentalidad-empresarial');
-});
+    // Opcional: verificar que el usuario exista
+    $perfil = PerfilPsicometrico::where('user_id', $userId)->first();
+    if (!$perfil) {
+        return redirect('/bienvenida')->with('error', 'Usuario no encontrado.');
+    }
+
+    return view('encuesta-perfil-comunicacion', compact('userId'));
+})->name('encuesta.comunicacion');
+
+
+Route::get('/encuesta-mentalidad-empresarial', function (Request $request) {
+    $userId = $request->query('user_id');
+
+    // Opcional: verificar que el usuario exista
+    $perfil = PerfilPsicometrico::where('user_id', $userId)->first();
+    if (!$perfil) {
+        return redirect('/bienvenida')->with('error', 'Usuario no encontrado.');
+    }
+
+    return view('encuesta-mentalidad-empresarial', compact('userId'));
+})->name('encuesta.mentalidad');
+
 
 Route::get('/perfil-colaborador', function () {
     return view('perfil-colaborador');
@@ -31,6 +49,11 @@ Route::get('/resumen-admin', function () {
 Route::get('/bienvenida', function () {
     return view('bienvenida');
 });
+
+Route::get('/encuestas-psicometricas', function (Request $request) {
+    $userId = $request->query('user_id');
+    return view('encuestas-psicometricas', ['user_id' => $userId]);
+})->name('encuestas.psicometricas');
 
 Route::get('/encuesta-diaria', [EncuestaDiariaController::class, 'index'])->name('encuesta.diaria');
 
