@@ -19,9 +19,20 @@
             </a>
         </div>
     </div>
-
     <div class="mt-5">
         <p class="text-muted">Después de completar ambas encuestas, se te redirigirá automáticamente a tu seguimiento diario.</p>
     </div>
+        @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+    @endif
+    
+    @if(session('error'))
+        <div class="alert alert-danger mt-4">
+            {{ session('error') }}
+        </div>
+    @endif
 </div>
 @endsection

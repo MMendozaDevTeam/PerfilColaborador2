@@ -53,7 +53,7 @@
            </button>
         </div>
         <div class="col-md-6 col-lg-3">
-            <button type="button" class="btn btn-primary w-100" id="continuarBtn">➡️ Continuar</button>
+            <button type="button" class="btn btn-primary w-100" id="continuarBtn">Continuar</button>
         </div>
     </div>
 
@@ -62,6 +62,14 @@
             {{ session('error') }}
         </div>
     @endif
+
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+    @endif
+
 </div>
 
 <script>

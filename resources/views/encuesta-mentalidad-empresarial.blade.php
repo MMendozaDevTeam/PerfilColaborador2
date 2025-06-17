@@ -9,12 +9,20 @@
     Selecciona el punto de la escala que represente con cuál afirmación te identificas más. 
 </p>
 <h2 class="mb-4 text-center">Encuesta de Perfil de Comunicación</h2>
+
 @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ session('success') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
     </div>
 @endif
+
+@if(session('error'))
+    <div class="alert alert-danger mt-4">
+        {{ session('error') }}
+    </div>
+@endif
+
 <form method="POST" action="{{ route('encuesta.mentalidad.guardar') }}">
     @csrf
 
