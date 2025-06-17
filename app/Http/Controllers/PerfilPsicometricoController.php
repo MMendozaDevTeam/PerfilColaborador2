@@ -33,4 +33,19 @@ class PerfilPsicometricoController extends Controller
                return redirect()->back()->with('error', 'No se encontró el perfil para actualizar.');
            }
     }
+
+    public function crearPerfilBasico(Request $request)
+    {
+        $validated = $request->validate([
+            'nombre' => 'required|string|max:100',
+            'user_id' => 'required|integer|unique:perfiles_psicometricos,user_id',
+        ]);
+    
+        PerfilPsicometrico::create([
+            'nombre' => $validated['nombre'],
+            'user_id' => $validated['user_id'],
+        ]);
+    
+        return redirect()->back()->with('success', 'Perfil creado correctamente. Ya puedes ingresar tu NIP.');
+    }
 }

@@ -9,9 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class EncuestaDiariaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $perfil = \App\Models\PerfilPsicometrico::whereNotNull('user_id')->first();
+        $userId = $request->query('user_id');
+
+        $perfil = PerfilPsicometrico::where('user_id', $userId)->first();
     
         // Si no hay perfil válido o faltan datos requeridos
         if (
@@ -23,6 +25,11 @@ class EncuestaDiariaController extends Controller
             !$perfil->estado_civil
         ) {
             return view('encuesta-diaria.datos-personales', compact('perfil'));
+        }
+
+        if (!$perfil || !$perfil->respuesta_comunicacion || !$perfil->respuesta_mentalidad) {
+        return redirect()->route('encuestas.psicometricas', ['user_id' => $userId])
+                         ->with('warning', 'Antes de responder la encuesta diaria, completa tu perfil psicométrico.');
         }
 
         // Simulación de preguntas personalizadas según perfil

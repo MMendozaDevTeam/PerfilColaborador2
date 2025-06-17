@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\EncuestaDiariaController;
 use App\Http\Controllers\PerfilPsicometricoController;
+use App\Http\Controllers\EncuestaPsicometricaController;
 use App\Models\PerfilPsicometrico;
 
 
@@ -89,3 +90,6 @@ Route::get('/acceso', function (Request $request) {
 });
 
 Route::post('/perfil-psicometrico', [PerfilPsicometricoController::class, 'store'])->name('perfil.psicometrico.store');
+Route::post('/guardar-mentalidad', [EncuestaPsicometricaController::class, 'guardarMentalidad'])->name('encuesta.mentalidad.guardar');
+Route::post('/guardar-comunicacion', [EncuestaPsicometricaController::class, 'guardarComunicacion'])->name('encuesta.comunicacion.guardar');
+Route::post('/crear-perfil', [PerfilPsicometricoController::class, 'crearPerfilBasico'])->name('perfil.nuevo');

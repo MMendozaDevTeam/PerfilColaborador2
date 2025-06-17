@@ -15,8 +15,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
     </div>
 @endif
-<form method="POST" action="{{ route('test-mentalidad.guardar') }}">
+<form method="POST" action="{{ route('encuesta.mentalidad.guardar') }}">
     @csrf
+
+    <input type="hidden" name="user_id" value="{{ request()->query('user_id') }}">
 
     @php
         $pares = [

@@ -10,8 +10,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
     </div>
 @endif
-<form method="POST" action="{{ route('perfil-comunicacion.guardar') }}">
+<form method="POST" action="{{ route('encuesta.comunicacion.guardar') }}">
     @csrf
+    <input type="hidden" name="user_id" value="{{ request()->query('user_id') }}">
     <div class="table-responsive">
         <table class="table table-bordered text-center align-middle">
             <thead class="table-dark">
