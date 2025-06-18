@@ -4,7 +4,11 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\EncuestaDiariaController;
 use App\Http\Controllers\PerfilPsicometricoController;
+use App\Http\Controllers\EncuestaPsicometricaController;
+use App\Http\Controllers\EncuestaRespuestaController;
 use App\Models\PerfilPsicometrico;
+use OpenAI\Laravel\Facades\OpenAI;
+
 
 
 Route::get('/', function () {
@@ -21,6 +25,11 @@ Route::get('/encuesta-perfil-comunicacion', function (Request $request) {
         return redirect('/bienvenida')->with('error', 'Usuario no encontrado.');
     }
 
+    if ($perfil->respuesta_comunicacion) {
+        return redirect()->route('encuestas.psicometricas', ['user_id' => $userId])
+        ->with('success', 'Ya completaste esta encuesta.');
+    }
+
     return view('encuesta-perfil-comunicacion', compact('userId'));
 })->name('encuesta.comunicacion');
 
@@ -32,6 +41,11 @@ Route::get('/encuesta-mentalidad-empresarial', function (Request $request) {
     $perfil = PerfilPsicometrico::where('user_id', $userId)->first();
     if (!$perfil) {
         return redirect('/bienvenida')->with('error', 'Usuario no encontrado.');
+    }
+
+    if ($perfil->respuesta_mentalidad) {
+        return redirect()->route('encuestas.psicometricas', ['user_id' => $userId])
+        ->with('success', 'Ya completaste esta encuesta.');
     }
 
     return view('encuesta-mentalidad-empresarial', compact('userId'));
@@ -48,7 +62,7 @@ Route::get('/resumen-admin', function () {
 
 Route::get('/bienvenida', function () {
     return view('bienvenida');
-});
+})->name('bienvenida');
 
 Route::get('/encuestas-psicometricas', function (Request $request) {
     $userId = $request->query('user_id');
@@ -89,3 +103,7 @@ Route::get('/acceso', function (Request $request) {
 });
 
 Route::post('/perfil-psicometrico', [PerfilPsicometricoController::class, 'store'])->name('perfil.psicometrico.store');
+Route::post('/guardar-mentalidad', [EncuestaPsicometricaController::class, 'guardarMentalidad'])->name('encuesta.mentalidad.guardar');
+Route::post('/guardar-comunicacion', [EncuestaPsicometricaController::class, 'guardarComunicacion'])->name('encuesta.comunicacion.guardar');
+Route::post('/crear-perfil', [PerfilPsicometricoController::class, 'crearPerfilBasico'])->name('perfil.nuevo');
+Route::post('/encuesta-diaria/guardar', [EncuestaRespuestaController::class, 'store'])->name('encuesta.diaria.store');

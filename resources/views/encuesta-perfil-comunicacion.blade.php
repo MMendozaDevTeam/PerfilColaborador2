@@ -4,14 +4,23 @@
 
 @section('content')
 <h2 class="mb-4 text-center">Encuesta de Perfil de Comunicación</h2>
+
 @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ session('success') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
     </div>
 @endif
-<form method="POST" action="{{ route('perfil-comunicacion.guardar') }}">
+
+@if(session('error'))
+    <div class="alert alert-danger mt-4">
+        {{ session('error') }}
+    </div>
+@endif
+
+<form method="POST" action="{{ route('encuesta.comunicacion.guardar') }}">
     @csrf
+    <input type="hidden" name="user_id" value="{{ request()->query('user_id') }}">
     <div class="table-responsive">
         <table class="table table-bordered text-center align-middle">
             <thead class="table-dark">
@@ -49,7 +58,7 @@
                     @foreach ($opciones as $indice => $opcion)
                     <td>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="respuestas[{{ $loop->parent->index }}]" id="p{{ $loop->parent->index }}_{{ $indice }}" value="{{ chr(65 + $indice) }}" required>
+                            <input class="form-check-input" type="radio" name="respuestas[{{ $loop->parent->index }}]" id="p{{ $loop->parent->index }}_{{ $indice }}" value="{{ $indice + 1 }}" required>
                             <label class="form-check-label" for="p{{ $loop->parent->index }}_{{ $indice }}">
                                 {{ $opcion }}
                             </label>

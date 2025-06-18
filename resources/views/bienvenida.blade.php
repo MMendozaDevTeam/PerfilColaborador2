@@ -3,6 +3,33 @@
 @section('title', 'Validar NIP')
 
 @section('content')
+<!-- Modal -->
+<div class="modal fade" id="crearPerfilModal" tabindex="-1" aria-labelledby="crearPerfilModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form action="{{ route('perfil.nuevo') }}" method="POST">
+      @csrf
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="crearPerfilModalLabel">Crear nuevo perfil</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre completo</label>
+            <input type="text" class="form-control" name="nombre" required>
+          </div>
+          <div class="mb-3">
+            <label for="user_id" class="form-label">Número de empleado (NIP)</label>
+            <input type="number" class="form-control" name="user_id" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Guardar perfil</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 <div class="container py-5 text-center">
     <h2 class="mb-4">🔐 Ingresar NIP</h2>
     <p class="text-muted">Introduce tu NIP de 4 dígitos para acceder a tu perfil</p>
@@ -21,19 +48,28 @@
 
     <div class="row mt-4 justify-content-center g-3">
         <div class="col-md-6 col-lg-3">
-            <a href="#" class="btn btn-outline-dark w-100">📋 Crear perfil</a>
+           <button type="button" class="btn btn-outline-dark w-100" data-bs-toggle="modal" data-bs-target="#crearPerfilModal">
+             📋 Crear perfil
+           </button>
         </div>
         <div class="col-md-6 col-lg-3">
-            <button type="button" class="btn btn-primary w-100" id="continuarBtn">➡️ Continuar</button>
+            <button type="button" class="btn btn-primary w-100" id="continuarBtn">Continuar</button>
         </div>
     </div>
+</div>
 
     @if(session('error'))
         <div class="alert alert-danger mt-4">
             {{ session('error') }}
         </div>
     @endif
-</div>
+
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+    @endif
 
 <script>
     const continuarBtn = document.getElementById('continuarBtn');

@@ -9,6 +9,8 @@ class PerfilPsicometrico extends Model
     protected $table = 'perfiles_psicometricos';
 
     protected $fillable = [
+        'nombre',
+        'user_id',
         'edad',
         'sexo',
         'nivel_educativo',
