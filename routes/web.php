@@ -102,6 +102,12 @@ Route::get('/acceso', function (Request $request) {
     return redirect()->route('encuestas.psicometricas', ['user_id' => $perfil->user_id]);
 });
 
+
+Route::get('/perfil-colaborador', [PerfilPsicometricoController::class, 'mostrarPerfilColaborador'])
+    ->name('perfil.colaborador');
+
+
+
 Route::post('/perfil-psicometrico', [PerfilPsicometricoController::class, 'store'])->name('perfil.psicometrico.store');
 Route::post('/guardar-mentalidad', [EncuestaPsicometricaController::class, 'guardarMentalidad'])->name('encuesta.mentalidad.guardar');
 Route::post('/guardar-comunicacion', [EncuestaPsicometricaController::class, 'guardarComunicacion'])->name('encuesta.comunicacion.guardar');
