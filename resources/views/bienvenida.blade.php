@@ -56,6 +56,7 @@
             <button type="button" class="btn btn-primary w-100" id="continuarBtn">Continuar</button>
         </div>
     </div>
+</div>
 
     @if(session('error'))
         <div class="alert alert-danger mt-4">
@@ -69,8 +70,6 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
     </div>
     @endif
-
-</div>
 
 <script>
     const continuarBtn = document.getElementById('continuarBtn');

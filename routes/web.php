@@ -5,7 +5,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\EncuestaDiariaController;
 use App\Http\Controllers\PerfilPsicometricoController;
 use App\Http\Controllers\EncuestaPsicometricaController;
+use App\Http\Controllers\EncuestaRespuestaController;
 use App\Models\PerfilPsicometrico;
+use OpenAI\Laravel\Facades\OpenAI;
+
 
 
 Route::get('/', function () {
@@ -59,7 +62,7 @@ Route::get('/resumen-admin', function () {
 
 Route::get('/bienvenida', function () {
     return view('bienvenida');
-});
+})->name('bienvenida');
 
 Route::get('/encuestas-psicometricas', function (Request $request) {
     $userId = $request->query('user_id');
@@ -103,3 +106,4 @@ Route::post('/perfil-psicometrico', [PerfilPsicometricoController::class, 'store
 Route::post('/guardar-mentalidad', [EncuestaPsicometricaController::class, 'guardarMentalidad'])->name('encuesta.mentalidad.guardar');
 Route::post('/guardar-comunicacion', [EncuestaPsicometricaController::class, 'guardarComunicacion'])->name('encuesta.comunicacion.guardar');
 Route::post('/crear-perfil', [PerfilPsicometricoController::class, 'crearPerfilBasico'])->name('perfil.nuevo');
+Route::post('/encuesta-diaria/guardar', [EncuestaRespuestaController::class, 'store'])->name('encuesta.diaria.store');

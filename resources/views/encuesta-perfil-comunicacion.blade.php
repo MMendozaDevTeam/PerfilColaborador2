@@ -58,7 +58,7 @@
                     @foreach ($opciones as $indice => $opcion)
                     <td>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="respuestas[{{ $loop->parent->index }}]" id="p{{ $loop->parent->index }}_{{ $indice }}" value="{{ chr(65 + $indice) }}" required>
+                            <input class="form-check-input" type="radio" name="respuestas[{{ $loop->parent->index }}]" id="p{{ $loop->parent->index }}_{{ $indice }}" value="{{ $indice + 1 }}" required>
                             <label class="form-check-label" for="p{{ $loop->parent->index }}_{{ $indice }}">
                                 {{ $opcion }}
                             </label>
