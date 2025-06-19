@@ -59,6 +59,13 @@ class PerfilPsicometricoController extends Controller
     {
         $userId = $request->query('user_id');
         $perfil = PerfilPsicometrico::where('user_id', $userId)->firstOrFail();
+
+        $respuestasTotales = EncuestaRespuestas::where('user_id', $userId)->count();
+
+        if ($respuestasTotales < 20) {
+            return redirect()->route('opciones.colaborador', ['user_id' => $userId])
+                             ->with('error', 'Debes responder al menos 20 preguntas antes de ver tu perfil generado por IA.');
+        }
     
         $inicioSemana = now()->startOfWeek(); // lunes
         $finSemana = now()->endOfWeek();     // domingo

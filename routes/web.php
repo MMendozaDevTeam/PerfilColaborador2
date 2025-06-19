@@ -6,6 +6,7 @@ use App\Http\Controllers\EncuestaDiariaController;
 use App\Http\Controllers\PerfilPsicometricoController;
 use App\Http\Controllers\EncuestaPsicometricaController;
 use App\Http\Controllers\EncuestaRespuestaController;
+use App\Http\Controllers\AdminController;
 use App\Models\PerfilPsicometrico;
 use OpenAI\Laravel\Facades\OpenAI;
 
@@ -56,13 +57,16 @@ Route::get('/perfil-colaborador', function () {
     return view('perfil-colaborador');
 });
 
-Route::get('/resumen-admin', function () {
-    return view('resumen-admin');
-});
-
 Route::get('/bienvenida', function () {
     return view('bienvenida');
 })->name('bienvenida');
+
+Route::get('/opciones-colaborador', function (Request $request) {
+    $userId = $request->query('user_id');
+    $colaborador = PerfilPsicometrico::where('user_id', $userId)->firstOrFail();
+    return view('opciones-colaborador', compact('colaborador'));
+})->name('opciones.colaborador');
+
 
 Route::get('/encuestas-psicometricas', function (Request $request) {
     $userId = $request->query('user_id');
@@ -105,6 +109,9 @@ Route::get('/acceso', function (Request $request) {
 
 Route::get('/perfil-colaborador', [PerfilPsicometricoController::class, 'mostrarPerfilColaborador'])
     ->name('perfil.colaborador');
+
+Route::get('/admin/colaboradores', [AdminController::class, 'index'])->name('admin.colaboradores');
+Route::get('/admin/colaborador', [AdminController::class, 'mostrarResumen'])->name('admin.colaborador.show');
 
 
 

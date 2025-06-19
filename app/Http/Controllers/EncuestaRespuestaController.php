@@ -37,6 +37,6 @@ public function store(Request $request)
         ]);
     }
 
-    return redirect()->route('bienvenida')->with('success', 'Respuestas guardadas correctamente, vuelve mañana para contestar una nueva encuesta');
+    return redirect()->route('opciones.colaborador' , ['user_id' => $userId])->with('success', 'Respuestas guardadas correctamente, vuelve mañana para contestar una nueva encuesta');
     }
 }
