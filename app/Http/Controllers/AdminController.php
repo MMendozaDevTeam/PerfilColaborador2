@@ -33,7 +33,7 @@ class AdminController extends Controller
     $respuestasTotales = EncuestaRespuestas::where('user_id', $userId)->count();
 
     if ($respuestasTotales < 20) {
-        return redirect()->route('admin.colaboradores')
+        return redirect()->route('admin.colaboradores', ['nip' => 1234])
                          ->with('error', 'Este colaborador aún no ha respondido suficientes preguntas para generar un resumen.');
     }
 
