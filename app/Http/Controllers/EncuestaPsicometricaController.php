@@ -28,9 +28,9 @@ class EncuestaPsicometricaController extends Controller
             if (abs($puntosCreativa - $puntosZonaConfort) <= 3) {
                 $mentalidad = 'Intermedia';
             } elseif ($puntosCreativa > $puntosZonaConfort) {
-                $mentalidad = 'Creativa';
+                $mentalidad = 'Crecimiento';
             } else {
-                $mentalidad = 'Zona de confort';
+                $mentalidad = 'Fija';
             }
         
             $perfil->update(['respuesta_mentalidad' => $mentalidad]);
