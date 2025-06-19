@@ -11,10 +11,15 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $nip = $request->query('nip');
+    
+        if (!$nip || $nip !== '1234') {
+            return redirect()->route('bienvenida')->with('error', 'Autenticación fallida. NIP inválido o no proporcionado.');
+        }
+    
         $colaboradores = PerfilPsicometrico::all();
-
         return view('admin.colaboradores', compact('colaboradores'));
     }
 
@@ -34,6 +39,9 @@ class AdminController extends Controller
 
     $inicioSemana = now()->startOfWeek();
     $finSemana = now()->endOfWeek();
+
+    $inicioSemanaFormatted = $inicioSemana->locale('es')->translatedFormat('d \d\e F');
+    $finSemanaFormatted = $finSemana->locale('es')->translatedFormat('d \d\e F');
 
     $resumenActual = ResumenSemanalGerente::where('user_id', $userId)
     ->whereDate('semana_inicio', $inicioSemana)
@@ -93,6 +101,7 @@ class AdminController extends Controller
         ],
     ]);
 
+
      $json = json_decode($response['choices'][0]['message']['content'], true);
 
         $resumenActual = ResumenSemanalGerente::create([
@@ -105,8 +114,9 @@ class AdminController extends Controller
 
     return view('admin.colaborador', [
         'perfil' => $perfil,
-        'fechaEvaluacion' => now()->format('d \d\e F \d\e Y'),
         'informeGerente' => $resumenActual->contenido,
+        'fechaInicioSemana' => $inicioSemanaFormatted,
+        'fechaFinSemana' => $finSemanaFormatted,
     ]);
     }
 }

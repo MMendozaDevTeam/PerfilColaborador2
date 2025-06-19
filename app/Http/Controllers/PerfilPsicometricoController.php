@@ -85,11 +85,14 @@ class PerfilPsicometricoController extends Controller
             ]);
         }
 
+        $inicioSemanaFormatted = $inicioSemana->locale('es')->translatedFormat('d \d\e F');
+        $finSemanaFormatted = $finSemana->locale('es')->translatedFormat('d \d\e F');
+
         $jsonContenido = json_decode($resumenActual->contenido, true);
     
         return view('perfil-colaborador', [
             'perfil' => $perfil,
-            'fechaEvaluacion' => now()->format('d \d\e F \d\e Y'),
+            'fechaEvaluacion' => now()->locale('es')->translatedFormat('d \d\e F \d\e Y'),
             'informeGeneral' => $jsonContenido ?? [
                 'resumen' => [
                     'emociones' => 'No disponible.',
@@ -99,6 +102,8 @@ class PerfilPsicometricoController extends Controller
                 'recomendaciones' => [],
                 'consejos_practicos' => [],
             ],
+            'fechaInicioSemana' => $inicioSemanaFormatted,
+            'fechaFinSemana' => $finSemanaFormatted,
         ]);
 
     }

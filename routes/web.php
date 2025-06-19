@@ -120,3 +120,9 @@ Route::post('/guardar-mentalidad', [EncuestaPsicometricaController::class, 'guar
 Route::post('/guardar-comunicacion', [EncuestaPsicometricaController::class, 'guardarComunicacion'])->name('encuesta.comunicacion.guardar');
 Route::post('/crear-perfil', [PerfilPsicometricoController::class, 'crearPerfilBasico'])->name('perfil.nuevo');
 Route::post('/encuesta-diaria/guardar', [EncuestaRespuestaController::class, 'store'])->name('encuesta.diaria.store');
+Route::post('/admin-validar-nip', function(Request $request) {
+    if ($request->nip_admin === '1234') { // Cambia por tu NIP real o consulta de BD
+        return redirect()->route('admin.colaboradores', ['nip' => $request->nip_admin]);
+    }
+    return back()->with('error', 'NIP de administrador incorrecto');
+})->name('admin.validar.nip');

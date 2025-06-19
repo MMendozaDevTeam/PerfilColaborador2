@@ -14,8 +14,15 @@
         <div class="card-body">
             <h4 class="fw-bold mb-1">👤 {{ $perfil->nombre }}</h4>
             <p class="mb-0 text-muted">Área: <strong>{{ $perfil->area }}</strong></p>
-            <p class="mb-0 text-muted">Antigüedad: <strong>{{ $perfil->antiguedad_anios }} años</strong></p>
-            <p class="mb-0 text-muted">Última actualización: <strong>{{ $fechaEvaluacion }}</strong></p>
+            <p class="mb-0 text-muted">
+                Antigüedad: 
+                <strong>
+                    {{ $perfil->antiguedad_anios == 0 ? 'Es nuevo en la empresa' : $perfil->antiguedad_anios . ' años' }}
+                </strong>
+            </p>           
+            <p class="text-muted mb-1">
+                Semana evaluada: <strong>{{ $fechaInicioSemana }} al {{ $fechaFinSemana }}</strong>
+            </p>      
         </div>
     </div>
 
@@ -46,8 +53,8 @@
     </div>
 
     <!-- Informe generado por IA -->
-    <div class="card border-dark shadow-sm mb-4">
-        <div class="card-header bg-dark text-white">
+    <div class="card border-primary shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
             📊 Informe de IA sobre el estado actual
         </div>
         <div class="card-body">
@@ -57,8 +64,8 @@
 
     <!-- Recomendaciones estratégicas -->
     @if (!empty($informeGerente['recomendaciones']))
-    <div class="card border-warning shadow-sm mb-4">
-        <div class="card-header bg-warning text-dark">
+    <div class="card border-primary shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
             🎯 Recomendaciones para el gerente
         </div>
         <div class="card-body">
