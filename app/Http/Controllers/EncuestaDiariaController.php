@@ -37,14 +37,14 @@ class EncuestaDiariaController extends Controller
                          ->with('warning', 'Antes de responder la encuesta diaria, completa tu perfil psicométrico.');
         }
     
-        //$yaRespondida = EncuestaRespuestas::where('user_id', $userId)
-        //                 ->whereDate('created_at', Carbon::today())
-        //                ->exists();
-        //
-        //if ($yaRespondida) {
-        //    return redirect()->route('bienvenida')
-        //                     ->with('success', 'Ya has respondido la encuesta del día de hoy. ¡Gracias!');
-        //}
+        $yaRespondida = EncuestaRespuestas::where('user_id', $userId)
+                         ->whereDate('created_at', Carbon::today())
+                        ->exists();
+                        
+        if ($yaRespondida) {
+            return redirect()->route('opciones.colaborador', ['user_id' => $userId])
+                             ->with('success', 'Ya has respondido la encuesta del día de hoy. ¡Gracias!');
+        }
 
             $inicioMes = Carbon::now()->startOfMonth();
             $finMes = Carbon::now()->endOfMonth();
@@ -54,10 +54,10 @@ class EncuestaDiariaController extends Controller
                                 ->count();
         
             $hoy = Carbon::today();
-           // $esUltimoDia = $hoy->isSameDay($finMes);
+            $esUltimoDia = $hoy->isSameDay($finMes);
         
             // Si es fin de mes y hay suficientes respuestas, genera y guarda resumen
-            if ($respuestasMes >= 20) {
+            if ($esUltimoDia && $respuestasMes >= 20) {
                 $resumenYaExiste = ResumenMensual::where('user_id', $userId)
                                     ->whereYear('created_at', $hoy->year)
                                     ->whereMonth('created_at', $hoy->month)
@@ -82,20 +82,6 @@ class EncuestaDiariaController extends Controller
     
         return view('encuesta-diaria.index', compact('preguntas', 'perfil'));
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private function obtenerContextoHistorico(int $userId): string
     {
@@ -149,21 +135,6 @@ class EncuestaDiariaController extends Controller
     
         return $contexto;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private function generarConOpenAI($contexto)
     {

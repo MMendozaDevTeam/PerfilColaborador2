@@ -59,6 +59,13 @@ class PerfilPsicometricoController extends Controller
     {
         $userId = $request->query('user_id');
         $perfil = PerfilPsicometrico::where('user_id', $userId)->firstOrFail();
+
+        $respuestasTotales = EncuestaRespuestas::where('user_id', $userId)->count();
+
+        if ($respuestasTotales < 20) {
+            return redirect()->route('opciones.colaborador', ['user_id' => $userId])
+                             ->with('error', 'Debes responder al menos 20 preguntas antes de ver tu perfil generado por IA.');
+        }
     
         $inicioSemana = now()->startOfWeek(); // lunes
         $finSemana = now()->endOfWeek();     // domingo
@@ -78,11 +85,14 @@ class PerfilPsicometricoController extends Controller
             ]);
         }
 
+        $inicioSemanaFormatted = $inicioSemana->locale('es')->translatedFormat('d \d\e F');
+        $finSemanaFormatted = $finSemana->locale('es')->translatedFormat('d \d\e F');
+
         $jsonContenido = json_decode($resumenActual->contenido, true);
     
         return view('perfil-colaborador', [
             'perfil' => $perfil,
-            'fechaEvaluacion' => now()->format('d \d\e F \d\e Y'),
+            'fechaEvaluacion' => now()->locale('es')->translatedFormat('d \d\e F \d\e Y'),
             'informeGeneral' => $jsonContenido ?? [
                 'resumen' => [
                     'emociones' => 'No disponible.',
@@ -92,6 +102,8 @@ class PerfilPsicometricoController extends Controller
                 'recomendaciones' => [],
                 'consejos_practicos' => [],
             ],
+            'fechaInicioSemana' => $inicioSemanaFormatted,
+            'fechaFinSemana' => $finSemanaFormatted,
         ]);
 
     }

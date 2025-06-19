@@ -14,6 +14,18 @@
     </div>
 
     <!-- Resumen General -->
+
+    <div class="card shadow-sm border-start border-5 border-secondary mb-4">
+        <div class="card-header bg-secondary text-white">
+            📋 Informe Emocional y de Actitud
+        </div>
+        <div class="card-body lh-lg">
+            <p><strong>🧠 Estado emocional:</strong> {{ $informeGeneral['resumen']['emociones'] }}</p>
+            <p><strong>🚀 Motivación:</strong> {{ $informeGeneral['resumen']['motivacion'] }}</p>
+            <p><strong>🌟 Actitud:</strong> {{ $informeGeneral['resumen']['actitud'] }}</p>
+        </div>
+    </div>
+
     <div class="card shadow-sm border-start border-5 border-secondary mb-4">
         <div class="card-header bg-secondary text-white">
             📋 Informe Emocional y de Actitud
